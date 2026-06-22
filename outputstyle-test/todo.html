@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>할 일 목록 앱</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen py-8 px-4">
+    <div class="max-w-2xl mx-auto">
+        <!-- 헤더 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">할 일 목록</h1>
+            <p class="text-gray-600">오늘의 할 일을 관리하세요</p>
+        </div>
+
+        <!-- 입력 카드 -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex gap-2">
+                <input
+                    id="todoInput"
+                    type="text"
+                    placeholder="새로운 할 일을 입력하세요..."
+                    class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button
+                    onclick="addTodo()"
+                    class="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-200 ease-in-out transform hover:scale-105 active:scale-95"
+                >
+                    추가
+                </button>
+            </div>
+        </div>
+
+        <!-- 할 일 목록 카드 -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div id="todoList" class="space-y-2">
+                <!-- 할 일 항목이 여기에 추가됨 -->
+            </div>
+
+            <!-- 빈 상태 메시지 -->
+            <div id="emptyMessage" class="text-center py-12 text-gray-400">
+                <p class="text-lg">아직 할 일이 없습니다</p>
+                <p class="text-sm">위에서 할 일을 추가해보세요</p>
+            </div>
+
+            <!-- 통계 -->
+            <div id="stats" class="mt-6 pt-6 border-t border-gray-200 flex gap-4 text-sm">
+                <div class="flex-1 text-center">
+                    <p class="text-gray-600">전체</p>
+                    <p id="totalCount" class="text-2xl font-bold text-gray-800">0</p>
+                </div>
+                <div class="flex-1 text-center">
+                    <p class="text-gray-600">완료</p>
+                    <p id="completedCount" class="text-2xl font-bold text-green-600">0</p>
+                </div>
+                <div class="flex-1 text-center">
+                    <p class="text-gray-600">남은 것</p>
+                    <p id="remainingCount" class="text-2xl font-bold text-blue-600">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 할 일 저장소
+        let todos = JSON.parse(localStorage.getItem('todos')) || [];
+
+        // 초기 렌더링
+        renderTodos();
+
+        // 할 일 추가
+        function addTodo() {
+            const input = document.getElementById('todoInput');
+            const text = input.value.trim();
+
+            if (text === '') {
+                alert('할 일을 입력해주세요');
+                return;
+            }
+
+            // 새 할 일 객체 생성
+            const todo = {
+                id: Date.now(),
+                text: text,
+                completed: false
+            };
+
+            todos.push(todo);
+            saveTodos();
+            renderTodos();
+
+            // 입력 필드 초기화
+            input.value = '';
+            input.focus();
+        }
+
+        // 할 일 삭제
+        function deleteTodo(id) {
+            todos = todos.filter(todo => todo.id !== id);
+            saveTodos();
+            renderTodos();
+        }
+
+        // 할 일 토글 (완료/미완료)
+        function toggleTodo(id) {
+            const todo = todos.find(t => t.id === id);
+            if (todo) {
+                todo.completed = !todo.completed;
+                saveTodos();
+                renderTodos();
+            }
+        }
+
+        // 할 일 목록 렌더링
+        function renderTodos() {
+            const todoList = document.getElementById('todoList');
+            const emptyMessage = document.getElementById('emptyMessage');
+
+            // 목록 초기화
+            todoList.innerHTML = '';
+
+            if (todos.length === 0) {
+                emptyMessage.classList.remove('hidden');
+            } else {
+                emptyMessage.classList.add('hidden');
+
+                // 할 일 항목 렌더링
+                todos.forEach(todo => {
+                    const item = document.createElement('div');
+                    item.className = 'flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = todo.completed;
+                    checkbox.onchange = () => toggleTodo(todo.id);
+                    checkbox.className = 'w-5 h-5 rounded cursor-pointer accent-blue-500';
+
+                    const text = document.createElement('span');
+                    text.textContent = todo.text;
+                    text.className = `flex-1 ${todo.completed ? 'line-through text-gray-400' : 'text-gray-800'}`;
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = '삭제';
+                    deleteBtn.onclick = () => deleteTodo(todo.id);
+                    deleteBtn.className = 'px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-sm rounded transition';
+
+                    item.appendChild(checkbox);
+                    item.appendChild(text);
+                    item.appendChild(deleteBtn);
+                    todoList.appendChild(item);
+                });
+            }
+
+            // 통계 업데이트
+            updateStats();
+        }
+
+        // 통계 업데이트
+        function updateStats() {
+            const totalCount = todos.length;
+            const completedCount = todos.filter(t => t.completed).length;
+            const remainingCount = totalCount - completedCount;
+
+            document.getElementById('totalCount').textContent = totalCount;
+            document.getElementById('completedCount').textContent = completedCount;
+            document.getElementById('remainingCount').textContent = remainingCount;
+
+            // 할 일이 없으면 통계 숨기기
+            const stats = document.getElementById('stats');
+            if (totalCount === 0) {
+                stats.classList.add('hidden');
+            } else {
+                stats.classList.remove('hidden');
+            }
+        }
+
+        // 로컬스토리지에 저장
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        // Enter 키 처리
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        }
+    </script>
+</body>
+</html>

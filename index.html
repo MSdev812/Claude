@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>김개발 — 개발자 포트폴리오</title>
+  <meta name="description" content="Full-Stack Developer 김개발의 포트폴리오입니다." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            dark: {
+              bg: '#0f1419',
+              card: '#1a1f2e',
+              border: '#2a3142'
+            },
+            accent: '#FF5722'
+          },
+          fontFamily: {
+            sans: ['"Noto Sans KR"', 'sans-serif'],
+            display: ['"Poppins"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="styles/custom.css" />
+</head>
+
+<body class="bg-dark-bg text-gray-100 font-sans">
+
+  <!-- 왼쪽 사이드바 -->
+  <aside class="fixed left-0 top-0 w-20 h-screen bg-dark-card border-r border-dark-border flex flex-col items-center justify-between py-8 z-40 max-md:hidden">
+    <!-- 로고 -->
+    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-display font-bold text-sm">K</div>
+
+    <!-- 네비 -->
+    <nav class="flex flex-col gap-8">
+      <a href="#profile" class="nav-icon group" title="프로필">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        <span class="tooltip">프로필</span>
+      </a>
+      <a href="#skills" class="nav-icon group" title="기술 스택">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.321 14.481l-7.521-7.521A5.228 5.228 0 006.75 8.75a5.228 5.228 0 00-5.05 1.21l7.521 7.521m0-7.521l7.521 7.521M6.75 8.75L12 3.5m0 0l5.25 5.25M12 3.5v10.25"/></svg>
+        <span class="tooltip">기술</span>
+      </a>
+      <a href="#experience" class="nav-icon group" title="경력">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m0 0v10l8 4"/></svg>
+        <span class="tooltip">경력</span>
+      </a>
+      <a href="#projects" class="nav-icon group" title="프로젝트">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span class="tooltip">프로젝트</span>
+      </a>
+      <a href="#education" class="nav-icon group" title="학력">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C6.5 6.253 2 10.998 2 17.25c0 5.25 3.07 9.75 10 13.75m0-13c5.5-1.747 9-6.492 9-11.75 0-5.252-3.07-9.75-10-13.75"/></svg>
+        <span class="tooltip">학력</span>
+      </a>
+    </nav>
+
+    <!-- 다크모드 토글 -->
+    <button id="darkToggle" class="nav-icon group" title="다크모드">
+      <svg class="w-6 h-6 sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.364 1.636l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      <svg class="w-6 h-6 moon-icon hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+      <span class="tooltip">다크모드</span>
+    </button>
+  </aside>
+
+  <!-- 모바일 상단 네비 -->
+  <div class="md:hidden fixed top-0 left-0 right-0 h-16 bg-dark-card border-b border-dark-border flex items-center justify-between px-4 z-40">
+    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white font-bold text-xs">K</div>
+    <button id="mobileMenu" class="text-gray-300">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+
+  <!-- 메인 컨텐츠 -->
+  <main class="md:ml-20 pt-16 md:pt-0">
+
+    <!-- 프로필 섹션 -->
+    <section id="profile" class="fade-in min-h-screen flex items-center px-4 md:px-8 py-20 md:py-32">
+      <div class="w-full max-w-6xl mx-auto">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <!-- 좌측: 소개 -->
+          <div class="space-y-6">
+            <div class="inline-block">
+              <span class="text-orange-500 text-sm font-semibold tracking-widest">안녕하세요 👋</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-display font-bold text-white leading-tight" id="profileName"></h1>
+            <p class="text-orange-500 text-xl font-semibold" id="profileTitle"></p>
+            <p class="text-gray-400 text-lg leading-relaxed" id="profileBio"></p>
+
+            <!-- 연락처 -->
+            <div class="space-y-2 text-sm text-gray-400" id="profileContact"></div>
+
+            <!-- SNS 링크 -->
+            <div class="flex gap-3 pt-4 flex-wrap" id="profileSns"></div>
+          </div>
+
+          <!-- 우측: 일러스트레이션 영역 -->
+          <div class="hidden md:flex items-center justify-center">
+            <div class="relative w-full h-96 bg-gradient-to-br from-orange-500/10 to-red-600/10 rounded-3xl border border-dark-border flex items-center justify-center">
+              <div class="text-center">
+                <div class="text-6xl mb-4">💻</div>
+                <p class="text-gray-500 text-sm">이미지 영역</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 기술 스택 섹션 -->
+    <section id="skills" class="fade-in px-4 md:px-8 py-20 md:py-32 bg-dark-card/50">
+      <div class="w-full max-w-6xl mx-auto">
+        <div class="mb-16">
+          <h2 class="text-4xl font-display font-bold text-white mb-2">기술 스택</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-full"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6" id="skillsContainer"></div>
+      </div>
+    </section>
+
+    <!-- 경력 섹션 -->
+    <section id="experience" class="fade-in px-4 md:px-8 py-20 md:py-32">
+      <div class="w-full max-w-6xl mx-auto">
+        <div class="mb-16">
+          <h2 class="text-4xl font-display font-bold text-white mb-2">경력</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-full"></div>
+        </div>
+        <div class="space-y-6" id="experienceContainer"></div>
+      </div>
+    </section>
+
+    <!-- 프로젝트 섹션 -->
+    <section id="projects" class="fade-in px-4 md:px-8 py-20 md:py-32 bg-dark-card/50">
+      <div class="w-full max-w-6xl mx-auto">
+        <div class="mb-16">
+          <h2 class="text-4xl font-display font-bold text-white mb-2">프로젝트</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-full"></div>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsContainer"></div>
+      </div>
+    </section>
+
+    <!-- 학력 섹션 -->
+    <section id="education" class="fade-in px-4 md:px-8 py-20 md:py-32">
+      <div class="w-full max-w-6xl mx-auto">
+        <div class="mb-16">
+          <h2 class="text-4xl font-display font-bold text-white mb-2">학력</h2>
+          <div class="w-12 h-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-full"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6" id="educationContainer"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 푸터 -->
+  <footer class="md:ml-20 py-8 px-4 text-center text-sm text-gray-500 border-t border-dark-border">
+    <p>© 2026 김개발. Built with Tailwind CSS &amp; JavaScript.</p>
+  </footer>
+
+  <script src="scripts/data.js"></script>
+  <script src="scripts/app.js"></script>
+</body>
+</html>

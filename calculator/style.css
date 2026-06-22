@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.calculator-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator {
+    background-color: #2d2d2d;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+}
+
+.display {
+    margin-bottom: 20px;
+}
+
+#display {
+    width: 100%;
+    padding: 20px;
+    font-size: 32px;
+    text-align: right;
+    background-color: #1a1a1a;
+    color: #00ff00;
+    border: 2px solid #444;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: default;
+}
+
+#display:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #404040;
+    color: #fff;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #505050;
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:active {
+    background-color: #333;
+}
+
+.clear-btn {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+.clear-btn:hover {
+    background-color: #ff5252;
+}
+
+.equal-btn {
+    background-color: #667eea;
+    font-size: 24px;
+}
+
+.equal-btn:hover {
+    background-color: #5568d3;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 480px) {
+    .calculator {
+        padding: 15px;
+        max-width: 90vw;
+    }
+
+    #display {
+        padding: 15px;
+        font-size: 24px;
+    }
+
+    .btn {
+        padding: 15px;
+        font-size: 18px;
+    }
+
+    .buttons {
+        gap: 8px;
+    }
+}

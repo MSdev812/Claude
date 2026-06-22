@@ -1,0 +1,243 @@
+/* ================== 기본 스타일 ================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1419;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FF5722;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6f3d;
+}
+
+/* ================== 배경 및 기본 색상 ================== */
+body {
+  background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+  color: #e5e7eb;
+  font-weight: 400;
+}
+
+/* ================== 애니메이션 ================== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 87, 34, 0.2);
+  }
+}
+
+/* ================== 페이드인 애니메이션 ================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================== 사이드바 네비게이션 ================== */
+aside a {
+  position: relative;
+  color: #9ca3af;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+aside a:hover,
+aside a.active {
+  color: #FF5722;
+}
+
+aside a.active {
+  background: rgba(255, 87, 34, 0.1);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* 툴팁 */
+.tooltip {
+  position: absolute;
+  left: 80px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  border: 1px solid #FF5722;
+}
+
+.group:hover .tooltip {
+  opacity: 1;
+}
+
+/* ================== 네비게이션 아이콘 ================== */
+.nav-icon {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-icon svg {
+  transition: all 0.3s ease;
+}
+
+.nav-icon:hover svg,
+.nav-icon.active svg {
+  filter: drop-shadow(0 0 4px rgba(255, 87, 34, 0.5));
+}
+
+/* ================== 카드 호버 효과 ================== */
+.group {
+  transition: all 0.3s ease;
+}
+
+.group:hover {
+  transform: translateY(-4px);
+}
+
+/* ================== 텍스트 선택 ================== */
+::selection {
+  background: rgba(255, 87, 34, 0.3);
+  color: #fff;
+}
+
+/* ================== 링크 스타일 ================== */
+a {
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #FF5722;
+}
+
+/* ================== 입력 요소 ================== */
+input, textarea {
+  background: #1a1f2e;
+  border: 1px solid #2a3142;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #FF5722;
+  box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.1);
+}
+
+/* ================== 버튼 스타일 ================== */
+button {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* ================== 반응형 디자인 ================== */
+@media (max-width: 768px) {
+  /* 모바일에서 사이드바 숨김 */
+  aside {
+    display: none;
+  }
+
+  body {
+    padding-top: 4rem;
+  }
+
+  main {
+    margin-left: 0 !important;
+  }
+
+  /* 모바일 네비 */
+  #mobileMenu {
+    display: block;
+  }
+
+  /* 섹션 패딩 조정 */
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* 타이틀 크기 조정 */
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.875rem !important;
+  }
+}
+
+/* ================== 다크모드 전환 애니메이션 ================== */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ================== 로딩 상태 ================== */
+.loading {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ================== 활성 링크 표시 ================== */
+a.active {
+  color: #FF5722;
+  font-weight: 600;
+}
+
+/* ================== 섹션 구분선 ================== */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #2a3142, transparent);
+  margin: 3rem 0;
+}

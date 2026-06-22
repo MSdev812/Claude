@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스톱워치</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+        <!-- 제목 -->
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">스톱워치</h1>
+
+        <!-- 시간 표시 -->
+        <div class="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-8 mb-8 text-center">
+            <div id="display" class="text-6xl font-mono font-bold text-white tracking-widest">
+                00:00:00
+            </div>
+        </div>
+
+        <!-- 버튼 컨테이너 -->
+        <div class="flex gap-4 justify-center">
+            <!-- 시작/일시정지 버튼 -->
+            <button
+                id="toggleBtn"
+                class="bg-green-500 hover:bg-green-600 active:bg-green-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+                시작
+            </button>
+
+            <!-- 리셋 버튼 -->
+            <button
+                id="resetBtn"
+                class="bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 shadow-lg"
+            >
+                리셋
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // 스톱워치 상태 관리
+        let elapsedTime = 0; // 밀리초 단위
+        let isRunning = false;
+        let intervalId = null;
+
+        const display = document.getElementById('display');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // 시간을 00:00:00 형식으로 포맷팅
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+
+            return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // 화면 업데이트
+        function updateDisplay() {
+            display.textContent = formatTime(elapsedTime);
+        }
+
+        // 시작/일시정지 토글
+        function toggleStopwatch() {
+            if (isRunning) {
+                // 일시정지
+                clearInterval(intervalId);
+                toggleBtn.textContent = '시작';
+                toggleBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600', 'active:bg-orange-700');
+                toggleBtn.classList.add('bg-green-500', 'hover:bg-green-600', 'active:bg-green-700');
+                isRunning = false;
+            } else {
+                // 시작
+                const startTime = Date.now() - elapsedTime;
+                intervalId = setInterval(() => {
+                    elapsedTime = Date.now() - startTime;
+                    updateDisplay();
+                }, 10); // 10ms마다 업데이트하여 부드러운 표시
+
+                toggleBtn.textContent = '일시정지';
+                toggleBtn.classList.remove('bg-green-500', 'hover:bg-green-600', 'active:bg-green-700');
+                toggleBtn.classList.add('bg-orange-500', 'hover:bg-orange-600', 'active:bg-orange-700');
+                isRunning = true;
+            }
+        }
+
+        // 리셋
+        function resetStopwatch() {
+            clearInterval(intervalId);
+            elapsedTime = 0;
+            isRunning = false;
+            updateDisplay();
+            toggleBtn.textContent = '시작';
+            toggleBtn.classList.remove('bg-orange-500', 'hover:bg-orange-600', 'active:bg-orange-700');
+            toggleBtn.classList.add('bg-green-500', 'hover:bg-green-600', 'active:bg-green-700');
+        }
+
+        // 이벤트 리스너
+        toggleBtn.addEventListener('click', toggleStopwatch);
+        resetBtn.addEventListener('click', resetStopwatch);
+    </script>
+</body>
+</html>

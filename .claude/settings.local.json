@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"C:\\\\Users\\\\user\\\\onedrive\\\\문서\\\\문성\\\\공부\\\\claude\")",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\Users\\\\user\\\\OneDrive\\\\문서\\\\문성\\\\공부\\\\Claude\\\\bucket-list-main\\\\.claude\\\\skills\\\\\" -ErrorAction SilentlyContinue | ForEach-Object { $_.Name })",
+      "Bash",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\user\\\\OneDrive\\\\문서\\\\문성\\\\공부\\\\Claude\\\\index.html\")"
+    ]
+  },
+  "outputStyle": "Intermediate Developer"
+}
